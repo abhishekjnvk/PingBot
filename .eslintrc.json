@@ -1,0 +1,82 @@
+{
+  "parserOptions": {
+    // Required for certain syntax usages
+    "ecmaVersion": 2018
+  },
+  "env": {
+    "node": true,
+    "es6": true,
+    "mocha": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:node/recommended",
+    "plugin:security/recommended"
+  ],
+  "rules": {
+    "indent": ["error", 2, { "VariableDeclarator": { "let": 2, "const": 3 } }],
+    "no-label-var": "error",
+    "no-var": "error",
+    "no-new-object": "error",
+    "object-shorthand": 1,
+    "quote-props": ["error", "as-needed"],
+    "no-array-constructor": "error",
+    "prefer-template": "error",
+    "template-curly-spacing": ["error", "never"],
+    "no-useless-escape": "error",
+    "no-eval": "error",
+    "prefer-rest-params": "error",
+    "prefer-arrow-callback": "error",
+    "arrow-spacing": "error",
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-body-style": ["error", "as-needed"],
+    "no-useless-constructor": "error",
+    "no-dupe-class-members": "error",
+    "class-methods-use-this": "error",
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "line": {
+          "markers": ["/"],
+          "exceptions": ["-", "+"]
+        },
+        "block": {
+          "markers": ["!"],
+          "exceptions": ["*"],
+          "balanced": true
+        }
+      }
+    ],
+    "space-before-blocks": [
+      "error",
+      { "functions": "always", "keywords": "always", "classes": "never" }
+    ],
+    "eol-last": ["error", "always"],
+    "array-bracket-spacing": ["error", "never"],
+    "object-curly-spacing": [
+      "error",
+      "always",
+      { "arraysInObjects": false, "objectsInObjects": true }
+    ],
+    "comma-spacing": ["error", { "before": false, "after": true }],
+    "key-spacing": [
+      2,
+      {
+        "singleLine": {
+          "beforeColon": false,
+          "afterColon": true
+        },
+        "multiLine": {
+          "beforeColon": true,
+          "afterColon": true,
+          "align": "colon"
+        }
+      }
+    ],
+    "no-trailing-spaces": "error",
+    "no-console": ["error"],
+    "newline-before-return": 1,
+    "lines-between-class-members": 1
+  }
+}

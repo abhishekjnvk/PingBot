@@ -1,27 +1,28 @@
-require("dotenv/config");
-var helper = require("./App/master-helper.js");
-var app = require("express")();
-const bodyParser = require("body-parser");
-var cache = require("memory-cache");
-var cors = require("cors");
-const masterHelper = require("./App/master-helper.js");
-const { use } = require("./Routes/index");
-app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use("/", require("./Routes/index"));
+require('dotenv').config()
+const express = require('express')
+const app = express()
+const serviceLocator = require('./app/helpers/service_locator');
+const { app_config } = require('./app/config');
+const PORT = app_config.APP_PORT || 8080
+const Database = require('./app/config/database');
 
-const port = process.env.PORT || 3030;
 
-var http = require("http").Server(app);
+require("./app/base/middleware")(app)
+require("./app/base/routes")(app)
+require("./app/base/handler")(app)
 
-http.listen(port, async () => {
-  websites = await helper.getWebsites();
-  websites.forEach((website) => {
-    cache.put(`scan_${website.id}`, 1);
-    setInterval(() => {
-      helper.scan(website);
-    }, website.timeout * 1000);
-  });
-  console.log("Connected to express server @" + port);
-});
+
+let domainService = serviceLocator.get('domainServiceV1');
+
+const startServer = async () => {
+  await Database._connect(app_config.MONGO_URI);
+  app.listen(PORT, function () {
+    setTimeout(() => {
+      domainService.startScan()
+    }, 5000);
+    serviceLocator.get('logger').info(`App listening on port ${PORT}!`)
+  })
+
+};
+
+startServer();

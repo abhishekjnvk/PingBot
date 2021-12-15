@@ -11,7 +11,6 @@
 
 
 - Clone this repo & run `npm install`
-- Import `db.sql` file
 - rename `env.example` to `.env` and update the credentials 
 
 
@@ -20,7 +19,7 @@
 - Node.js
 - Bootstrap
 - Curl
-- MySQL
+- MongoDB
 
 
 [website]: https://ping-bot.abhishekjnvk.in/
