@@ -7,11 +7,13 @@ class AuthServiceV1 extends BaseService {
     constructor(opts) {
         super(opts, 'Users');
     }
+    
     async login(body) {
         let { email, password, keep_login } = body;
         let user = await this.databaseService.getByQuery(this.modelName, { email }, true, ['_id', 'name', 'email', 'password']);
         if (await this.utils.compare(password, user.password)) {
-            let token = await this.utils.signToken({ ...user, password: undefined, isAuthenticated: true },keep_login);
+            let data={_id:user._id}
+            let token = await this.utils.signToken(data,keep_login);
             return { token };
         } else {
             const err = this.errs(
@@ -21,12 +23,14 @@ class AuthServiceV1 extends BaseService {
             throw err;
         }
     }
+
     async register(body) {
         let regBody={...body, password: await this.utils.getHash(body.password)};
         let prevUser = await this.databaseService.getOneByQuery(this.modelName, { email:body.email },true);
         if(!prevUser){
         let user = await this.databaseService.create(this.modelName, regBody);
-        let token = await this.utils.signToken({ ...user, password: undefined, isAuthenticated: true },true);
+        let data={_id:user._id}
+        let token = await this.utils.signToken(data,true);
         return { token,user };
         }else{
             const err = this.errs(
