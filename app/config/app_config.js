@@ -1,6 +1,6 @@
 module.exports = {
         APP_NAME: process.env.APP_NAME || 'Ping Bot',
-        APP_PORT: process.env.APP_PORT || 8080,
+        APP_PORT: process.env.PORT || 8080,
         MONGO_URI: process.env.MONGO_URI || 'mongodb://localhost:27017/pingBot',
         MIN_PASSWORD_LENGTH: Number(process.env.MIN_PASSWORD_LENGTH) || 6,
         JWT_SECRET: process.env.APP_TOKEN_SECRET || 'myappsecret',

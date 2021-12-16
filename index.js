@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const serviceLocator = require('./app/helpers/service_locator');
 const { app_config } = require('./app/config');
-const PORT = app_config.APP_PORT || 8080
+const PORT = app_config.APP_PORT
 const Database = require('./app/config/database');
 
 
