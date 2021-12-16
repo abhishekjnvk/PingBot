@@ -31,8 +31,8 @@ const verifyLogin = async (req, res, next) => {
     } else {
       let data = await verifyTokenFromHeader(req);
       if (data) {
-        httpContext.set("user", data._doc);
-        req.user = data._doc;
+        httpContext.set("user", data);
+        req.user = data;
         next();
       } else {
         const err = errs(
