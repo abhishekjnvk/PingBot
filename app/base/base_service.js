@@ -6,7 +6,6 @@ class BaseService {
     this.utils = opts.utils;
     this.errs = opts.errs;
     this.cache = opts.cache;
-    this.storage_manager = opts.storage_manager;
     this.databaseService = opts.databaseService;
     this.httpStatus = opts.httpStatus;
   }
