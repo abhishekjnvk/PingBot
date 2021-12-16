@@ -23,7 +23,7 @@ class DomainServiceV1 extends BaseService {
   }
 
   async startScan(page = 1, limit = 10) {
-    let domains = await await this.databaseService.paginate(this.modelName, {}, { id_deleted: true }, page, limit);
+    let domains = await this.databaseService.paginate(this.modelName, {}, { id_deleted: true }, page, limit);
     domains.docs.map(domain => {
       this.cache.put(`scan_${domain._id}`, domain.timeout);
         this.scan(domain);
