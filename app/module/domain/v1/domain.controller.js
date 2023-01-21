@@ -22,7 +22,7 @@ class DomainControllerV1 extends BaseController {
         try{
             this.logger.info(this.name+" updateDomain() called");
             let {params:{id},body}=req;
-            let response = await this.service.update(id,body);
+            let response = await this.service.update(id, body);
             this.logger.info(this.name+" updateDomain() Response sent");
             res.status(200).json(response);
         }

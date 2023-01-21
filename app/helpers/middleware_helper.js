@@ -35,17 +35,18 @@ const verifyLogin = async (req, res, next) => {
         req.user = data;
         next();
       } else {
-        const err = errs(
-          httpStatus.UNAUTHORIZED,
-          'Invalid token'
-        );
-        throw err;
+        // const err = errs(
+        //   httpStatus.UNAUTHORIZED,
+        //   'Invalid token'
+        // );
+        // throw err;
+        next()
       }
     }
   }
   catch (err) {
-    res.status(401);
-    next(err, 401)
+    res.status(200);
+    next(err, 200)
   }
 }
 

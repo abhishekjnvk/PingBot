@@ -12,6 +12,9 @@ const addDomainValidator = celebrate(
         sms_alert   : joi.boolean().default(false),
         sms_time   : joi.number().min(60).default(60),
         email_time   : joi.number().min(60).default(60),
+        tags: joi.array().items(
+          joi.string()
+        )
     }),
   },
   { allowUnknown: false, stripUnknown: true, warnings: true },

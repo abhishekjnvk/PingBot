@@ -14,7 +14,7 @@ class AuthServiceV1 extends BaseService {
         if (await this.utils.compare(password, user.password)) {
             let data={_id:user._id}
             let token = await this.utils.signToken(data,keep_login);
-            return { token };
+            return { token, status: true };
         } else {
             const err = this.errs(
                 this.httpStatus.UNAUTHORIZED,

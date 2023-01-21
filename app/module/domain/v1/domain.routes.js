@@ -19,6 +19,11 @@ router.post('/domain',addDomainValidator, function (req, res, next) {
     service_locator.get('domainControllerV1').addDomain(req, res, next)
 })
 
+router.put('/domain/:id',addDomainValidator, function (req, res, next) {
+    logger.info('/domain/:id put()');
+    service_locator.get('domainControllerV1').updateDomain(req, res, next)
+})
+
 router.delete('/domain/:id', function (req, res, next) {
     logger.info('/domain/:id delete()');
     service_locator.get('domainControllerV1').deleteDomain(req, res, next)

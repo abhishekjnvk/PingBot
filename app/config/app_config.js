@@ -1,12 +1,4 @@
-let start_bot=true
-if(process.env.START_BOT==='false'){
-        start_bot=false
-}
 
-let start_server=true
-if(process.env.START_SERVER==='false'){
-        start_server=false
-}
 
 module.exports = {
         APP_NAME: process.env.APP_NAME || 'Ping Bot',
@@ -22,6 +14,6 @@ module.exports = {
         SMTP_USER: process.env.SMTP_USER || 'bot@sample_app.com',
         SMTP_PASS: process.env.SMTP_PASS || 'password',
         GOOGLE_KEY: process.env.GOOGLE_KEY || '',
-        START_BOT: start_bot,
-        START_SERVER: start_server
+        START_BOT: process.env.START_BOT === 'false' ? false : true,
+        START_SERVER: process.env.START_SERVER === 'false' ? false : true,
 };
