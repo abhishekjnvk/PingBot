@@ -30,7 +30,6 @@ class DomainServiceV1 extends BaseService {
       page,
       limit
     );
-    console.log(domains.docs);
     domains.docs.map((domain) => {
       this.cache.put(`scan_${domain._id}`, domain.timeout);
       this.scan(domain);
@@ -45,12 +44,17 @@ class DomainServiceV1 extends BaseService {
           this.scan(website);
         }, timeout * 1000);
         var command = `curl -sL -A 'PseudoBot/2.1 (+http://pseudohack.in/bot.html)' -w "%{http_code};%{time_total}" "${website.url}" -o /dev/null`;
+        console.log(command);
         let child = await exec(command);
         let { stdout } = child;
         let response = stdout.split(';');
         let status = response[0];
         let response_time = response[1];
         let isActive = true;
+
+        //TODO: Send mail if status is 200
+        // this.mailServiceV1.s(website, status);
+
         if (status >= 200 && status <= 399) {
           if (this.cache.get(`reminder_${website._id}`)) {
             this.mailServiceV1.SendSuccessMessage(website, status);

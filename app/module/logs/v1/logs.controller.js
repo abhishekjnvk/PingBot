@@ -31,13 +31,13 @@ class LogControllerV1 extends BaseController {
       this.logger.info(this.name + ' getLog() called');
       let { id } = req.params;
       let { _id: user_id } = req.user;
-      let { page = 1, limit = 20, lastID } = req.query;
+      let { page = 1, limit = 200, last_id, log_from} = req.query;
       let query = { website_id: id, user_id };
-      if (lastID) query = { _id: { $gt: ObjectId(lastID) } };
-      let response = await this.service.getAllWithPagination(
+      if (last_id) query = { _id: { $gt: ObjectId(last_id) } };
+      if (log_from) query = { ...query, created_at: { $gt: log_from } };
+      
+      let response = await this.service.getByQuery(
         query,
-        page,
-        limit
       );
       this.logger.info(this.name + ' getLog() Response sent');
       return res.send(response);

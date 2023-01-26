@@ -7,9 +7,7 @@ const { app_config } = require('./app/config');
 const PORT = app_config.APP_PORT;
 const Database = require('./app/config/database');
 let domainService = serviceLocator.get('domainServiceV1');
-let utils = serviceLocator.get('utils');
 
-console.log(utils.getTimeStamp());
 let connectDB = async () => {
   await Database._connect(app_config.MONGO_URI);
 };

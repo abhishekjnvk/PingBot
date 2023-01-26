@@ -8,7 +8,6 @@ class MailControllerV1 extends BaseController {
     async getAllMails(req, res, next) {
         try {
             this.logger.info(this.name + " getAllMails() called");
-            console.log(req.query);
             let { _id: user_id } = req.user;
             let { page = 1, limit = 100 } = req.query;
             let response = await this.service.getAllWithPagination({ user_id }, page, limit,{created_at:-1},['_id','website_id','subject','created_at']);

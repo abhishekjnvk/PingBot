@@ -25,11 +25,12 @@ const UpdateProfileValidator = celebrate(
   {
     body: joi.object({
       name: joi.string(),
-      mobile: joi.string().min(10),
-      city: joi.string(),
+      mobile: joi.string().min(10).allow(''),
+      city: joi.string().allow(''),
+      role: joi.string().allow(''),
     }),
   },
-  { allowUnknown: false, stripUnknown: true, warnings: true },
+  { allowUnknown: true, stripUnknown: true, warnings: false },
   {}
 );
 

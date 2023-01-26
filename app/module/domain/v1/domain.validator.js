@@ -1,6 +1,7 @@
 'use strict';
 
 const { celebrate, Joi: joi } = require('celebrate');
+const { API_METHODS } = require('../domain.constants');
 
 const addDomainValidator = celebrate(
   {
@@ -12,6 +13,9 @@ const addDomainValidator = celebrate(
         sms_alert   : joi.boolean().default(false),
         sms_time   : joi.number().min(60).default(60),
         email_time   : joi.number().min(60).default(60),
+        method   : joi.string().valid(
+         ...Object.values(API_METHODS)
+        ).default(API_METHODS.GET),
         tags: joi.array().items(
           joi.string()
         )

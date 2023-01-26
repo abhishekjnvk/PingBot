@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const {API_METHODS} = require('./domain.constants');
+
 const DomainSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -9,6 +11,12 @@ const DomainSchema = new mongoose.Schema({
         type:String,
         required:true,
         trim:true
+    },
+    method:{
+        type:String,
+        required:true,
+        enum: Object.values(API_METHODS),
+        default: API_METHODS.GET
     },
     timeout:{
         type:Number,
