@@ -9,6 +9,7 @@ class LogServiceV1 extends BaseService {
   async getSummary(websiteId, rQuery, userId) {
     try {
       this.logger.info(this.name + ' getSummary() called');
+      let result = {};
       let { from, to } = rQuery;
       let query = {
         website_id: websiteId,
@@ -70,15 +71,27 @@ class LogServiceV1 extends BaseService {
                 { $floor: { $multiply: [{ $size: '$response_time' }, 0.95] } },
               ],
             },
+            p99: {
+              $arrayElemAt: [
+                '$response_time',
+                {
+                  $floor: { $multiply: [{ $size: '$response_time' }, 0.99] },
+                },
+              ],
+            },
           },
         },
       ]);
 
       this.logger.info(this.name + ' getSummary() Response sent');
 
-      if (response.length) return response[0];
-      else {
+      if (response.length) {
+        result = response[0];
+        result.success_rate = result.success / result.total;
       }
+
+      result.query = rQuery;
+      return result;
     } catch (err) {
       this.logger.error(this.name + ' getSummary() Error: ' + err);
       throw err;

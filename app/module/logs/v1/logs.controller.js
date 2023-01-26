@@ -31,12 +31,30 @@ class LogControllerV1 extends BaseController {
       this.logger.info(this.name + ' getLog() called');
       let { id } = req.params;
       let { _id: user_id } = req.user;
-      let { page = 1, limit = 200, last_id, log_from } = req.query;
+      let { page = 1, limit = 200, last_id, from, to } = req.query;
       let query = { website_id: id, user_id };
       if (last_id) query = { _id: { $gt: ObjectId(last_id) } };
-      if (log_from) query = { ...query, created_at: { $gt: log_from } };
+      if (from) {
+        if (from > to) throw new Error('Invalid date range');
+        if (!to) to = Date.now();
 
-      let response = await this.service.getByQuery(query);
+        query = {
+          ...query,
+          created_at: {
+            $gte: Number(from),
+            $lte: Number(to),
+          },
+        };
+      }
+
+      let response = await this.service.getAllWithPagination(
+        query,
+        page,
+        limit,
+        {
+          created_at: -1,
+        }
+      );
       this.logger.info(this.name + ' getLog() Response sent');
       return res.send(response);
     } catch (err) {
