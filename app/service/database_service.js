@@ -1,5 +1,5 @@
 'use strict';
-class DatabaseService{
+class DatabaseService {
   constructor(opts) {
     this.dbService = opts.mongoService;
   }
@@ -153,7 +153,9 @@ class DatabaseService{
   }
 
   async aggregate(modelName, aggregationPipe = []) {
-    return await this.dbService.aggregate(modelName, aggregationPipe);
+    return await this.dbService.aggregate(modelName, aggregationPipe, {
+      allowDiskUse: true,
+    });
   }
 
   async getNextSequence(seqName, seqPrefix, entityId) {

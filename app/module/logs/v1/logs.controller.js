@@ -31,18 +31,33 @@ class LogControllerV1 extends BaseController {
       this.logger.info(this.name + ' getLog() called');
       let { id } = req.params;
       let { _id: user_id } = req.user;
-      let { page = 1, limit = 200, last_id, log_from} = req.query;
+      let { page = 1, limit = 200, last_id, log_from } = req.query;
       let query = { website_id: id, user_id };
       if (last_id) query = { _id: { $gt: ObjectId(last_id) } };
       if (log_from) query = { ...query, created_at: { $gt: log_from } };
-      
-      let response = await this.service.getByQuery(
-        query,
-      );
+
+      let response = await this.service.getByQuery(query);
       this.logger.info(this.name + ' getLog() Response sent');
       return res.send(response);
     } catch (err) {
       this.logger.error(this.name + ' getLog() Error: ' + err);
+      next(err);
+    }
+  }
+
+  async getSummary(req, res, next) {
+    try {
+      this.logger.info(this.name + ' getSummary() called');
+      let {
+        params: { id },
+        query,
+        user: { _id: userId },
+      } = req;
+      let response = await this.service.getSummary(id, query, userId);
+      this.logger.info(this.name + ' getSummary() Response sent');
+      return res.send(response);
+    } catch (err) {
+      this.logger.error(this.name + ' getSummary() Error: ' + err);
       next(err);
     }
   }
